@@ -13,7 +13,7 @@ class PostsController < ApplicationController
     end
 
     @page = Page.new(params: params, relation: posts_scope)
-    @posts = posts_scope.order(created_at: :desc).limit(@page.per_page).offset(@page.offset).preload(comments: :user)
+    @posts = posts_scope.order(created_at: :desc).limit(@page.per_page).offset(@page.offset).preload(:tags, comments: :user)
     @all_user_tags = Tag.joins(:posts).where(posts: { user: @user }).distinct
   end
 
